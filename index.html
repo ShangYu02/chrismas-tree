@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Merry Christmas</title>
+<title>Merry Chrismas 小雅</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23000'/%3E%3Cpath d='M12 3l5 8h-3l4 6h-4v4h-4v-4H6l4-6H7z' fill='%23ffd9e6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
-<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Great+Vibes&display=swap">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Great+Vibes&family=Noto+Serif+SC:wght@400;500&display=swap">
 <style>
   :root { color-scheme: dark; }
   html, body { margin: 0; height: 100%; background: #000; }
@@ -21,12 +21,16 @@
     color: #fff; line-height: 1.06;
     text-shadow: 0 0 18px rgba(150, 200, 255, 0.55), 0 0 44px rgba(150, 200, 255, 0.22);
   }
-  .greet .l1 { font-size: clamp(28px, 6vh, 78px); }
-  .greet .l2 { font-size: clamp(26px, 5.6vh, 70px); margin-top: 0.24em; }
+  .greet .l1 { font-size: clamp(28px, 6vh, 78px); white-space: nowrap; }
+  /* 中文名：手写体里没有汉字，单独换衬线字体并缩小，避免和花体抢视觉 */
+  .greet .cn {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+    font-size: 0.58em; font-weight: 400; letter-spacing: 0.1em;
+    margin-left: 0.18em; vertical-align: 0.12em;
+  }
   @media (max-aspect-ratio: 105/100) {
-    .greet { left: 4.8vw; top: 4vh; }
-    .greet .l1 { font-size: clamp(20px, 5.6vw, 34px); }
-    .greet .l2 { font-size: clamp(19px, 5.2vw, 32px); }
+    .greet { left: 4.2vw; top: 2.2vh; }
+    .greet .l1 { font-size: clamp(17px, 5vw, 30px); }
   }
 </style>
 </head>
@@ -34,16 +38,12 @@
 <div class="stage">
   <canvas id="gl" aria-label="旋转的 3D 粒子圣诞树"></canvas>
   <canvas id="fx"></canvas>
-  <div class="greet"><div class="l1" id="l1">Merry Christmas</div><div class="l2" id="l2">🐮🐷🦆</div></div>
+  <div class="greet"><div class="l1">Merry Chrismas <span class="cn">小雅</span></div></div>
 </div>
 <noscript><p style="color:#fff;font:16px/1.6 sans-serif;padding:24px">这个页面需要启用 JavaScript 才能显示动画。</p></noscript>
 <script>
 (function () {
-  // ================== 可改的文字（对应原版 README 的提醒） ==================
-  var CONFIG = {
-    line1: "Merry Christmas",
-    line2: "🐮🐷🦆"          // ← 换成你自己的名字 / 备注
-  };
+  // 页面文字在 <body> 里的 .greet 节点（Merry Chrismas 小雅），要改直接改那一行
 
   // ================== 与原 tree.py 一致的全局参数 ==================
   var TREE_POINTS = 50000, GROUND_POINTS = 4000, STAR_POINTS = 1200,
@@ -449,8 +449,6 @@
   });
 
   function start() {
-    document.getElementById('l1').textContent = CONFIG.line1;
-    document.getElementById('l2').textContent = CONFIG.line2;
     initGL();
     if (gl) {
       aPosLoc = gl.getAttribLocation(prog, 'a_pos');
